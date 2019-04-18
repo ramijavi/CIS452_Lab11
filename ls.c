@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
             exit(1);
         }
         if (strcmp(argv[1], "-i") == 0){
-            printf("%ld %s   ",
+            printf("%-10ld %s\n",
                     statBuf.st_ino,
                     entryPtr->d_name);
         }
@@ -95,7 +95,7 @@ int main(int argc, char *argv[]) {
             else {
                 permissions[9] = '-';
             }
-            printf("%-12s %-d %-d %-d %-10d %-25s %s", permissions, statBuf.st_nlink, statBuf.st_uid, statBuf.st_gid, statBuf.st_size, entryPtr->d_name, ctime(&statBuf.st_atime));
+            printf("%-12s %ld %d %d %-10ld %-25s %s", permissions, statBuf.st_nlink, statBuf.st_uid, statBuf.st_gid, statBuf.st_size, entryPtr->d_name, ctime(&statBuf.st_atime));
         }
         else if (strcmp(argv[1], "-l") == 0) {
             if (S_ISREG(statBuf.st_mode)){
@@ -162,7 +162,7 @@ int main(int argc, char *argv[]) {
             struct passwd *pw = getpwuid(statBuf.st_uid);
             struct group *gw = getgrgid(statBuf.st_gid);
 
-            printf("%-12s %-d %-s %-s %-10d %-25s %s", permissions, statBuf.st_nlink, pw->pw_name, gw->gr_name, statBuf.st_size, entryPtr->d_name, ctime(&statBuf.st_atime));
+            printf("%-12s %ld %s %s %-10ld %-25s %s", permissions, statBuf.st_nlink, pw->pw_name, gw->gr_name, statBuf.st_size, entryPtr->d_name, ctime(&statBuf.st_atime));
         }
 
     }
