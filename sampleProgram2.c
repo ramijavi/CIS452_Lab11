@@ -4,8 +4,9 @@
 #include <sys/types.h>
 #include <errno.h>
 #include <stdlib.h>
-#include <pwd.h>
 #include <unistd.h>
+#include <pwd.h>
+#include <grp.h>
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
@@ -26,11 +27,14 @@ int main(int argc, char *argv[]) {
             exit(1);
         }
         struct passwd *pw = getpwuid(statBuf.st_uid);
-        
-        printf("%-15s %-10s %-10d\n", 
-                entryPtr->d_name, 
+        struct group *gw = getgrgid(statBuf.st_gid);
+
+        printf("%-20s %-10s %-10s %-10d %-10d\n",
+                entryPtr->d_name,
                 pw->pw_name,
-                statBuf.st_size
+                gw->gr_name,
+                statBuf.st_size,
+                statBuf.st_ino
                 );
     }
 
